@@ -30,6 +30,11 @@ United States Congress dataset
 
 DROP DATABASE IF EXISTS us_congress;
 -- SQLBook: Code
+CREATE DATABASE formula1
+-- SQLBook: Code
+-- Active: 1698697467073@@127.0.0.1@5432@formula1
+DROP TABLE IF EXISTS races
+-- SQLBook: Code
 CREATE DATABASE us_congress;
 -- SQLBook: Code
 -- Active: 1698697467073@@127.0.0.1@5432@us_congress
@@ -143,7 +148,7 @@ SELECT * FROM schemas_name.tables_name
 -- SQLBook: Code
 -- Active: 1698697467073@@127.0.0.1@5432@us_congress
 -- Write your own code
-SELECT * FROM members.us_congress_members;
+SELECT * FROM members.bills_members;
 -- SQLBook: Markup
 # <span style="color:darkblue"> III. Merge Data </span>
 
@@ -155,35 +160,30 @@ Import the data before proceeding!
 <font size = "5">
 
 Count unique rows
--- SQLBook: Code
--- COUNT(DISTINCT ) computes the number of unique rows
--- "AS" is the alias or name of the statistic
-
-SELECT COUNT(DISTINCT party_name) AS num_distinct_parties,
-       COUNT(*) AS num_members       
-FROM members.us_congress_members
 -- SQLBook: Markup
 <font size = "5">
 Display unique rows
 -- SQLBook: Code
+-- Active: 1698697467073@@127.0.0.1@5432@us_congress
 SELECT party_name       
-FROM members.us_congress_members
+FROM members.bills_members
 GROUP BY party_name
 -- SQLBook: Markup
 <font size = "5">
 
 Count members of group
 -- SQLBook: Code
--- Active: 1698674191041@@127.0.0.1@5432@us_congress
+-- Active: 1698697467073@@127.0.0.1@5432@us_congress
 SELECT party_name,       
        COUNT(*) AS num_members       
-FROM members.us_congress_members
+FROM members.bills_members
 GROUP BY party_name;
 -- SQLBook: Markup
 <font size = "5">
 
 Merge Databases
 -- SQLBook: Code
+-- Active: 1698697467073@@127.0.0.1@5432@us_congress
 -- FROM indicates the primary table
 -- LEFT JOIN indicates the secondary table for merging
 -- ON ... = ... is the matching column
@@ -193,8 +193,8 @@ Merge Databases
 
 SELECT * 
 FROM bills.bills_actions
-LEFT JOIN members.us_congress_members
-ON us_congress_members.member_id  = bills_actions.member_id;
+LEFT JOIN members.bills_members
+ON bills_members.member_id  = bills_actions.member_id;
 -- SQLBook: Markup
 <font size = "5">
 
@@ -218,7 +218,7 @@ AND schema1.table1.key1_3 = schema2.table2.key2_3;
 
 - **Hint:** the rows in the two tables are uniquely identified by the columns: ```congress```, ```bill_number```, ```bill_type```
 -- SQLBook: Code
--- Active: 1698674191041@@127.0.0.1@5432@us_congress
+-- Active: 1698697467073@@127.0.0.1@5432@postgres
 -- Write your own code
 SELECT * FROM bills.bills_actions
 LEFT JOIN bills.bills_subjects
